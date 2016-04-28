@@ -122,8 +122,16 @@ A string format expression that is used to derive a unique Temporary URL S3 Key.
             $TemplateUrl = $tempUrl
         }
 
+        $testStackParams = @{}
+        if ($TemplateUrl) {
+            $testStackParams.TemplateURL = $TemplateUrl
+        }
+        else {
+            $testStackParams.TemplateBody = $TemplateBody
+        }
+
         ## First test the template to make sure it's valid and passes the basic checks
-        $testResult = Test-CFNTemplate -TemplateBody $TemplateBody -ErrorAction Stop @awsBaseParams
+        $testResult = Test-CFNTemplate @testStackParams -ErrorAction Stop @awsBaseParams
         Write-Verbose "CFN Template Test Passed"
 
         ## Get existing stack so we know if we need to create or update
