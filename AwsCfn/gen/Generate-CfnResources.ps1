@@ -173,7 +173,7 @@ $($resProp.description)
 
             if ($tagProps) {
                 $paramsAdd += @"
-  if (`$$resPropName) {
+  if (`$PSBoundParameters.ContainsKey('$resPropName')) {
     `$tagsList = New-Object System.Collections.ArrayList
     foreach (`$tk in `$$resPropName.Keys) {
       `$t = @{ Key = `$tk }
@@ -212,7 +212,7 @@ $($resProp.description)
             }
             else {
                 $paramsAdd += @"
-  if (`$$resPropName) {
+  if (`$PSBoundParameters.ContainsKey('$resPropName')) {
     `$rProperties.$resPropName = `$$resPropName
   }
 
