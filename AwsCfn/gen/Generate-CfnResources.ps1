@@ -4,6 +4,8 @@ Usage:
     Generate-CfnResources.ps1 > CfnResources.generated.ps1
 #>
 
+## Mapping of schema property types to their
+## POSH cmdlet parameter type counterparts
 $RES_PROP_TYPES = @{
     String    = 'string'
     Object    = 'System.Collections.IDictionary'
@@ -16,7 +18,10 @@ $RES_PROP_TYPES = @{
     DestinationCidrBlock = 'string' # docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpn-connection-route.html
 }
 
+## List of any resources to skip from auto-generation
 $RES_EXCLUDE = @(
+    ## We exclude this from the auto-generated resource
+    ## directives because we have a manually-crafted version
     'AWS::CloudFormation::CustomResource'
 )
 

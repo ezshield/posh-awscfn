@@ -12,7 +12,7 @@
 RootModule = 'AwsCfn.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.8.0.4'
+ModuleVersion = '0.8.1.0'
 
 # ID used to uniquely identify this module
 GUID = '82f49e0b-e3d8-41eb-a881-f9cfb3f95892'
@@ -76,6 +76,7 @@ NestedModules = @(
     'CfnCondition.ps1'
     'CfnOutput.ps1'
     'CfnResources.generated.ps1'
+    'CfnResourceCustom.ps1'
     'CfnResourceProperty.ps1'
     'CfnResourceTag.ps1'
     'CfnStackPolicy.ps1'
