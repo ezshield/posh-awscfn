@@ -634,6 +634,11 @@
             "allowed-values": [
               "*",
               "t1.micro",
+              "t2.nano",
+              "t2.micro",
+              "t2.small",
+              "t2.medium",
+              "t2.large",
               "m1.small",
               "m1.medium",
               "m1.large",
@@ -645,6 +650,11 @@
               "m3.large",
               "m3.xlarge",
               "m3.2xlarge",
+              "m4.large",
+              "m4.xlarge",
+              "m4.2xlarge",
+              "m4.4xlarge",
+              "m4.10xlarge",
               "c1.medium",
               "c1.xlarge",
               "cr1.8xlarge",
@@ -653,11 +663,20 @@
               "c3.2xlarge",
               "c3.4xlarge",
               "c3.8xlarge",
+              "c4.large",
+              "c4.xlarge",
+              "c4.2xlarge",
+              "c4.4xlarge",
+              "c4.8xlarge",
               "cc1.4xlarge",
               "cc2.8xlarge",
               "cg1.4xlarge",
+              "d2.xlarge",
+              "d2.2xlarge",
+              "d2.4xlarge",
+              "d2.8xlarge",
               "g2.2xlarge",
-              "g2.2xlarge",
+              "g2.8xlarge",
               "hi1.4xlarge",
               "hs1.8xlarge",
               "i2.xlarge",
@@ -4346,6 +4365,11 @@
             "allowed-values": [
               "*",
               "t1.micro",
+              "t2.nano",
+              "t2.micro",
+              "t2.small",
+              "t2.medium",
+              "t2.large",
               "m1.small",
               "m1.medium",
               "m1.large",
@@ -4357,6 +4381,11 @@
               "m3.large",
               "m3.xlarge",
               "m3.2xlarge",
+              "m4.large",
+              "m4.xlarge",
+              "m4.2xlarge",
+              "m4.4xlarge",
+              "m4.10xlarge",
               "c1.medium",
               "c1.xlarge",
               "cr1.8xlarge",
@@ -4365,11 +4394,20 @@
               "c3.2xlarge",
               "c3.4xlarge",
               "c3.8xlarge",
+              "c4.large",
+              "c4.xlarge",
+              "c4.2xlarge",
+              "c4.4xlarge",
+              "c4.8xlarge",
               "cc1.4xlarge",
               "cc2.8xlarge",
               "cg1.4xlarge",
+              "d2.xlarge",
+              "d2.2xlarge",
+              "d2.4xlarge",
+              "d2.8xlarge",
               "g2.2xlarge",
-              "g2.2xlarge",
+              "g2.8xlarge",
               "hi1.4xlarge",
               "hs1.8xlarge",
               "i2.xlarge",
@@ -5195,6 +5233,12 @@
             "resource-ref-type": "AWS::EC2::Instance",
             "required": false,
             "description": "The ID of a NAT instance in your VPC. For example, \"i-1a2b3c4d\". Required: Conditional. You must provide only one of the following: a GatewayID, InstanceID, or NetworkInterfaceId."
+          },
+          "NatGatewayId": {
+            "type": "String",
+            "resource-ref-type": "AWS::EC2::NatGateway",
+            "required": false,
+            "description": "The ID of a NAT gateway. For example, nat-0a12bc456789de0fg."
           },
           "NetworkInterfaceId": {
             "type": "String",
@@ -6055,6 +6099,11 @@
                     "allowed-values": [
                       "*",
                       "t1.micro",
+                      "t2.nano",
+                      "t2.micro",
+                      "t2.small",
+                      "t2.medium",
+                      "t2.large",
                       "m1.small",
                       "m1.medium",
                       "m1.large",
@@ -6066,6 +6115,11 @@
                       "m3.large",
                       "m3.xlarge",
                       "m3.2xlarge",
+                      "m4.large",
+                      "m4.xlarge",
+                      "m4.2xlarge",
+                      "m4.4xlarge",
+                      "m4.10xlarge",
                       "c1.medium",
                       "c1.xlarge",
                       "cr1.8xlarge",
@@ -6074,11 +6128,20 @@
                       "c3.2xlarge",
                       "c3.4xlarge",
                       "c3.8xlarge",
+                      "c4.large",
+                      "c4.xlarge",
+                      "c4.2xlarge",
+                      "c4.4xlarge",
+                      "c4.8xlarge",
                       "cc1.4xlarge",
                       "cc2.8xlarge",
                       "cg1.4xlarge",
+                      "d2.xlarge",
+                      "d2.2xlarge",
+                      "d2.4xlarge",
+                      "d2.8xlarge",
                       "g2.2xlarge",
-                      "g2.2xlarge",
+                      "g2.8xlarge",
                       "hi1.4xlarge",
                       "hs1.8xlarge",
                       "i2.xlarge",
@@ -6865,6 +6928,7 @@
             "type": "Array",
             "array-type": "String",
             "required": false,
+            "resource-ref-type": "AWS::EC2::RouteTable",
             "description": "One or more route table IDs that are used by the VPC to reach the endpoint."
           },
           "ServiceName": {
@@ -8712,6 +8776,7 @@
               "Value": {
                 "type": "String",
                 "required": true,
+                "resource-ref-type": "*",
                 "description": "The value of the setting."
               }
             }
@@ -9597,6 +9662,58 @@
             "required": false,
             "description": "The software configuration of the Amazon EMR cluster."
           },
+          "EbsConfiguration": {
+            "type": "Object",
+            "required": false,
+            "description": "Configures Amazon Elastic Block Store (Amazon EBS) storage volumes to attach to your instances.",
+            "properties": {
+              "EbsBlockDeviceConfig": {
+                "type": "Object",
+                "required": false,
+                "description": "Configures the block storage devices that are associated with your EMR instances.",
+                "properties": {
+                  "VolumeSpecification": {
+                    "type": "Object",
+                    "required": false,
+                    "description": "The settings for the Amazon EBS volumes.",
+                    "properties": {
+                      "Iops": {
+                        "type": "Number",
+                        "required": false,
+                        "description": "The number of I/O operations per second (IOPS) that the volume supports. For more information, see Iops for the EbsBlockDevice action in the Amazon EC2 API Reference."
+                      },
+                      "SizeInGB": {
+                        "type": "Number",
+                        "required": true,
+                        "description": "The volume size, in Gibibytes (GiB)."
+                      },
+                      "VolumeType": {
+                        "type": "Number",
+                        "required": true,
+                        "allowed-values": [
+                          "*",
+                          "standard",
+                          "io1",
+                          "gp2"
+                        ],
+                        "description": "The volume type, such as standard or io1."
+                      }
+                    }
+                  },
+                  "VolumesPerInstance": {
+                    "type": "Number",
+                    "required": false,
+                    "description": "The number of Amazon EBS volumes that you want to create for each instance in the EMR cluster or instance group."
+                  }
+                }
+              },
+              "EbsOptimized": {
+                "type": "Boolean",
+                "required": false,
+                "description": "Indicates whether the instances are optimized for Amazon EBS I/O."
+              }
+            }
+          },
           "Instances": {
             "type": "Object",
             "required": true,
@@ -9877,6 +9994,58 @@
             "required": false,
             "description": "A list of configurations to apply to this instance group."
           },
+          "EbsConfiguration": {
+            "type": "Object",
+            "required": false,
+            "description": "Configures Amazon Elastic Block Store (Amazon EBS) storage volumes to attach to your instances.",
+            "properties": {
+              "EbsBlockDeviceConfig": {
+                "type": "Object",
+                "required": false,
+                "description": "Configures the block storage devices that are associated with your EMR instances.",
+                "properties": {
+                  "VolumeSpecification": {
+                    "type": "Object",
+                    "required": false,
+                    "description": "The settings for the Amazon EBS volumes.",
+                    "properties": {
+                      "Iops": {
+                        "type": "Number",
+                        "required": false,
+                        "description": "The number of I/O operations per second (IOPS) that the volume supports. For more information, see Iops for the EbsBlockDevice action in the Amazon EC2 API Reference."
+                      },
+                      "SizeInGB": {
+                        "type": "Number",
+                        "required": true,
+                        "description": "The volume size, in Gibibytes (GiB)."
+                      },
+                      "VolumeType": {
+                        "type": "Number",
+                        "required": true,
+                        "allowed-values": [
+                          "*",
+                          "standard",
+                          "io1",
+                          "gp2"
+                        ],
+                        "description": "The volume type, such as standard or io1."
+                      }
+                    }
+                  },
+                  "VolumesPerInstance": {
+                    "type": "Number",
+                    "required": false,
+                    "description": "The number of Amazon EBS volumes that you want to create for each instance in the EMR cluster or instance group."
+                  }
+                }
+              },
+              "EbsOptimized": {
+                "type": "Boolean",
+                "required": false,
+                "description": "Indicates whether the instances are optimized for Amazon EBS I/O."
+              }
+            }
+          },
           "InstanceCount": {
             "type": "Number",
             "required": true,
@@ -9889,6 +10058,11 @@
             "allowed-values": [
               "*",
               "t1.micro",
+              "t2.nano",
+              "t2.micro",
+              "t2.small",
+              "t2.medium",
+              "t2.large",
               "m1.small",
               "m1.medium",
               "m1.large",
@@ -9900,6 +10074,11 @@
               "m3.large",
               "m3.xlarge",
               "m3.2xlarge",
+              "m4.large",
+              "m4.xlarge",
+              "m4.2xlarge",
+              "m4.4xlarge",
+              "m4.10xlarge",
               "c1.medium",
               "c1.xlarge",
               "cr1.8xlarge",
@@ -9908,11 +10087,20 @@
               "c3.2xlarge",
               "c3.4xlarge",
               "c3.8xlarge",
+              "c4.large",
+              "c4.xlarge",
+              "c4.2xlarge",
+              "c4.4xlarge",
+              "c4.8xlarge",
               "cc1.4xlarge",
               "cc2.8xlarge",
               "cg1.4xlarge",
+              "d2.xlarge",
+              "d2.2xlarge",
+              "d2.4xlarge",
+              "d2.8xlarge",
               "g2.2xlarge",
-              "g2.2xlarge",
+              "g2.8xlarge",
               "hi1.4xlarge",
               "hs1.8xlarge",
               "i2.xlarge",
@@ -10044,6 +10232,336 @@
             "type": "String",
             "required": true,
             "description": "A name for the job flow step."
+          }
+        }
+      },
+      "Condition": {
+        "type": "ConditionDeclaration",
+        "required": false,
+        "description": "Associated condition that if true will allow the resource to be created."
+      },
+      "DependsOn": {
+        "type": "Resource",
+        "required": false,
+        "description": "The DependsOn attribute enables you to specify that the creation of a specific resource follows another."
+      },
+      "DeletionPolicy": {
+        "type": "String",
+        "required": false,
+        "allowed-values": [
+          "Delete",
+          "Retain"
+        ],
+        "disable-refs": true,
+        "description": "The DeletionPolicy attribute enables you to specify how AWS CloudFormation handles the resource deletion."
+      },
+      "Metadata": {
+        "type": "Json",
+        "required": false,
+        "description": "The Metadata attribute enables you to associate structured data with a resource."
+      }
+    }
+  }
+,
+  "AWS::GameLift::Alias": {
+    "type": "Object",
+    "required": false,
+    "description": "The AWS::GameLift::Alias resource creates an alias for an Amazon GameLift (GameLift) fleet, which you can use to anonymize your fleet.",
+    "properties": {
+      "Type": {
+        "type": "String",
+        "required": true,
+        "description": "The AWS::GameLift::Alias resource creates an alias for an Amazon GameLift (GameLift) fleet, which you can use to anonymize your fleet."
+      },
+      "Properties": {
+        "type": "Object",
+        "required": true,
+        "properties": {
+          "Description": {
+            "type": "String",
+            "required": false,
+            "description": "Information that helps you identify the purpose of this alias."
+          },
+          "Name": {
+            "type": "String",
+            "required": true,
+            "description": "An identifier to associate with this alias. Alias names don't need to be unique."
+          },
+          "RoutingStrategy": {
+            "type": "Object",
+            "required": false,
+            "description": "A routing configuration that specifies where traffic is directed for this alias, such as to a fleet or to a message.",
+            "properties": {
+              "FleetId": {
+                "type": "String",
+                "required": false,
+                "description": "A unique identifier of a GameLift fleet to associate with the alias."
+              },
+              "Message": {
+                "type": "String",
+                "required": false,
+                "description": "A text message that GameLift displays for the Terminal routing type."
+              },
+              "Type": {
+                "type": "String",
+                "required": true,
+                "description": "The type of routing strategy. For the SIMPLE type, traffic is routed to an active GameLift fleet. For the Terminal type, GameLift returns an exception with the message that you specified in the Message property.",
+                "allowed-values": [
+                  "*",
+                  "SIMPLE",
+                  "TERMINAL"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Condition": {
+        "type": "ConditionDeclaration",
+        "required": false,
+        "description": "Associated condition that if true will allow the resource to be created."
+      },
+      "DependsOn": {
+        "type": "Resource",
+        "required": false,
+        "description": "The DependsOn attribute enables you to specify that the creation of a specific resource follows another."
+      },
+      "DeletionPolicy": {
+        "type": "String",
+        "required": false,
+        "allowed-values": [
+          "Delete",
+          "Retain"
+        ],
+        "disable-refs": true,
+        "description": "The DeletionPolicy attribute enables you to specify how AWS CloudFormation handles the resource deletion."
+      },
+      "Metadata": {
+        "type": "Json",
+        "required": false,
+        "description": "The Metadata attribute enables you to associate structured data with a resource."
+      }
+    }
+  }
+,
+  "AWS::GameLift::Build": {
+    "type": "Object",
+    "required": false,
+    "description": "The AWS::GameLift::Build resource creates a build that includes all of the components to run your game server in an Amazon GameLift (GameLift) fleet.",
+    "properties": {
+      "Type": {
+        "type": "String",
+        "required": true,
+        "description": "The AWS::GameLift::Build resource creates a build that includes all of the components to run your game server in an Amazon GameLift (GameLift) fleet."
+      },
+      "Properties": {
+        "type": "Object",
+        "required": true,
+        "properties": {
+          "Name": {
+            "type": "String",
+            "required": false,
+            "description": "An identifier to associate with this build. Build names don't need to be unique."
+          },
+          "StorageLocation": {
+            "type": "Object",
+            "required": false,
+            "description": "The Amazon Simple Storage Service (Amazon S3) location where your build package files are located.",
+            "properties": {
+              "Bucket": {
+                "type": "String",
+                "required": true,
+                "resource-ref-type": "AWS::S3::Bucket",
+                "description": "The S3 bucket where the GameLift build package files are stored."
+              },
+              "Key": {
+                "type": "String",
+                "required": true,
+                "description": "The prefix (folder name) where the GameLift build package files are located."
+              },
+              "RoleArn": {
+                "type": "String",
+                "required": true,
+                "resource-ref-type": "AWS::IAM::Role",
+                "description": "An AWS Identity and Access Management (IAM) role Amazon Resource Name (ARN) that GameLift can assume to retrieve the build package files from Amazon Simple Storage Service (Amazon S3)."
+              }
+            }
+          },
+          "Version": {
+            "type": "String",
+            "required": false,
+            "description": "A version to associate with this build. Version is useful if you want to track updates to your build package files. Versions don't need to be unique."
+          }
+        }
+      },
+      "Condition": {
+        "type": "ConditionDeclaration",
+        "required": false,
+        "description": "Associated condition that if true will allow the resource to be created."
+      },
+      "DependsOn": {
+        "type": "Resource",
+        "required": false,
+        "description": "The DependsOn attribute enables you to specify that the creation of a specific resource follows another."
+      },
+      "DeletionPolicy": {
+        "type": "String",
+        "required": false,
+        "allowed-values": [
+          "Delete",
+          "Retain"
+        ],
+        "disable-refs": true,
+        "description": "The DeletionPolicy attribute enables you to specify how AWS CloudFormation handles the resource deletion."
+      },
+      "Metadata": {
+        "type": "Json",
+        "required": false,
+        "description": "The Metadata attribute enables you to associate structured data with a resource."
+      }
+    }
+  }
+,
+  "AWS::GameLift::Fleet": {
+    "type": "Object",
+    "required": false,
+    "description": "The AWS::GameLift::Fleet resource creates an Amazon GameLift (GameLift) fleet to host game servers.",
+    "properties": {
+      "Type": {
+        "type": "String",
+        "required": true,
+        "description": "The AWS::GameLift::Fleet resource creates an Amazon GameLift (GameLift) fleet to host game servers."
+      },
+      "Properties": {
+        "type": "Object",
+        "required": true,
+        "properties": {
+          "BuildId": {
+            "type": "String",
+            "required": true,
+            "description": "The unique identifier for the build that you want to use with this fleet."
+          },
+          "Description": {
+            "type": "String",
+            "required": false,
+            "description": "Information that helps you identify the purpose of this fleet."
+          },
+          "DesiredEC2Instances": {
+            "type": "Number",
+            "required": true,
+            "description": "The number of EC2 instances that you want in this fleet."
+          },
+          "EC2InboundPermissions": {
+            "type": "Object",
+            "required": true,
+            "description": "The incoming traffic, expressed as IP ranges and port numbers, that is permitted to access the game server.",
+            "properties": {
+              "FromPort": {
+                "type": "Number",
+                "required": true,
+                "description": "The starting value for a range of allowed port numbers. This value must be lower than the ToPort value."
+              },
+              "IpRange": {
+                "type": "String",
+                "required": true,
+                "description": "The range of allowed IP addresses in CIDR notation."
+              },
+              "Protocol": {
+                "type": "String",
+                "required": true,
+                "allowed-values": [
+                  "*",
+                  "tcp",
+                  "udp",
+                  "icmp"
+                ],
+                "description": "The network communication protocol that is used by the fleet."
+              },
+              "ToPort": {
+                "type": "Number",
+                "required": true,
+                "description": "The ending value for a range of allowed port numbers. This value must be higher than the FromPort value."
+              }
+            }
+          },
+          "EC2InstanceType": {
+            "type": "String",
+            "required": true,
+            "description": "The type of EC2 instances that the fleet uses. EC2 instance types define the CPU, memory, storage, and networking capacity of the fleet's hosts.",
+            "allowed-values": [
+              "*",
+              "t1.micro",
+              "t2.nano",
+              "t2.micro",
+              "t2.small",
+              "t2.medium",
+              "t2.large",
+              "m1.small",
+              "m1.medium",
+              "m1.large",
+              "m1.xlarge",
+              "m2.xlarge",
+              "m2.2xlarge",
+              "m2.4xlarge",
+              "m3.medium",
+              "m3.large",
+              "m3.xlarge",
+              "m3.2xlarge",
+              "m4.large",
+              "m4.xlarge",
+              "m4.2xlarge",
+              "m4.4xlarge",
+              "m4.10xlarge",
+              "c1.medium",
+              "c1.xlarge",
+              "cr1.8xlarge",
+              "c3.large",
+              "c3.xlarge",
+              "c3.2xlarge",
+              "c3.4xlarge",
+              "c3.8xlarge",
+              "c4.large",
+              "c4.xlarge",
+              "c4.2xlarge",
+              "c4.4xlarge",
+              "c4.8xlarge",
+              "cc1.4xlarge",
+              "cc2.8xlarge",
+              "cg1.4xlarge",
+              "d2.xlarge",
+              "d2.2xlarge",
+              "d2.4xlarge",
+              "d2.8xlarge",
+              "g2.2xlarge",
+              "g2.8xlarge",
+              "hi1.4xlarge",
+              "hs1.8xlarge",
+              "i2.xlarge",
+              "i2.2xlarge",
+              "i2.4xlarge",
+              "i2.8xlarge",
+              "r3.large",
+              "r3.xlarge",
+              "r3.2xlarge",
+              "r3.4xlarge",
+              "r3.8xlarge"
+            ]
+          },
+          "LogPaths": {
+            "type": "Array",
+            "array-type": "String",
+            "required": false,
+            "description": "The path to game-session log files that are generated by your game server, with the slashes (\\) escaped. After a game session has been terminated, GameLift captures and stores the logs in an S3 bucket."
+          },
+          "Name": {
+            "type": "String",
+            "required": true,
+            "description": "An identifier to associate with this fleet. Fleet names don't need to be unique."
+          },
+          "ServerLaunchPath": {
+            "type": "String",
+            "required": true,
+            "description": "The location of your game server that GameLift launches."
           }
         }
       },
@@ -10768,6 +11286,71 @@
     }
   }
 ,
+  "AWS::Lambda::Alias": {
+    "type": "Object",
+    "required": false,
+    "description": "The AWS::Lambda::Alias resource creates an alias that points to an AWS Lambda (Lambda) function that you specify.",
+    "properties": {
+      "Type": {
+        "type": "String",
+        "required": true,
+        "description": "The AWS::Lambda::Alias resource creates an alias that points to an AWS Lambda (Lambda) function that you specify."
+      },
+      "Properties": {
+        "type": "Object",
+        "required": true,
+        "properties": {
+          "Description": {
+            "type": "String",
+            "required": false,
+            "description": "Information that describes the alias, such as its purpose or the function that it's associated with."
+          },
+          "FunctionName": {
+            "type": "String",
+            "required": true,
+            "resource-ref-type": "AWS::Lambda::Function",
+            "description": "The Lambda function that you want to associate with this alias. You can specify the function's name or its Amazon Resource Name (ARN)."
+          },
+          "FunctionVersion": {
+            "type": "String",
+            "required": true,
+            "description": "The version of the Lambda function that you want to associate with this alias."
+          },
+          "Name": {
+            "type": "String",
+            "required": true,
+            "description": "A name for the alias."
+          }
+        }
+      },
+      "Condition": {
+        "type": "ConditionDeclaration",
+        "required": false,
+        "description": "Associated condition that if true will allow the resource to be created."
+      },
+      "DependsOn": {
+        "type": "Resource",
+        "required": false,
+        "description": "The DependsOn attribute enables you to specify that the creation of a specific resource follows another."
+      },
+      "DeletionPolicy": {
+        "type": "String",
+        "required": false,
+        "allowed-values": [
+          "Delete",
+          "Retain"
+        ],
+        "disable-refs": true,
+        "description": "The DeletionPolicy attribute enables you to specify how AWS CloudFormation handles the resource deletion."
+      },
+      "Metadata": {
+        "type": "Json",
+        "required": false,
+        "description": "The Metadata attribute enables you to associate structured data with a resource."
+      }
+    }
+  }
+,
   "AWS::Lambda::EventSourceMapping": {
     "type": "Object",
     "required": false,
@@ -10926,6 +11509,27 @@
             "type": "Number",
             "required": false,
             "description": "The function execution time (in seconds) after which Lambda terminates the function. By default, Timeout is set to 3 seconds."
+          },
+          "VpcConfig": {
+            "type": "Object",
+            "required": false,
+            "description": "If the Lambda function requires access to resources in a VPC, specify a VPC configuration that Lambda uses to set up an elastic network interface (ENI).",
+            "properties": {
+              "SecurityGroupIds": {
+                "type": "Array",
+                "array-type": "String",
+                "required": true,
+                "resource-ref-type": "AWS::EC2::SecurityGroup",
+                "description": "A list of one or more security groups IDs in the VPC that includes the resources to which your Lambda function requires access."
+              },
+              "SubnetIds": {
+                "type": "Array",
+                "array-type": "String",
+                "required": true,
+                "resource-ref-type": "AWS::EC2::Subnet",
+                "description": "A list of one or more subnet IDs in the VPC that includes the resources to which your Lambda function requires access."
+              }
+            }
           }
         }
       },
@@ -10996,6 +11600,72 @@
             "type": "String",
             "required": false,
             "description": "The ARN of a resource that is invoking your function."
+          }
+        }
+      },
+      "Condition": {
+        "type": "ConditionDeclaration",
+        "required": false,
+        "description": "Associated condition that if true will allow the resource to be created."
+      },
+      "DependsOn": {
+        "type": "Resource",
+        "required": false,
+        "description": "The DependsOn attribute enables you to specify that the creation of a specific resource follows another."
+      },
+      "DeletionPolicy": {
+        "type": "String",
+        "required": false,
+        "allowed-values": [
+          "Delete",
+          "Retain"
+        ],
+        "disable-refs": true,
+        "description": "The DeletionPolicy attribute enables you to specify how AWS CloudFormation handles the resource deletion."
+      },
+      "Metadata": {
+        "type": "Json",
+        "required": false,
+        "description": "The Metadata attribute enables you to associate structured data with a resource."
+      }
+    }
+  }
+,
+  "AWS::Lambda::Version": {
+    "type": "Object",
+    "required": false,
+    "description": "The AWS::Lambda::Version resource publishes a specified version of an AWS Lambda (Lambda) function.",
+    "return-values": [
+      {
+        "name": "Version",
+        "description": "The published version of a Lambda version, such as 1."
+      }
+    ],
+    "properties": {
+      "Type": {
+        "type": "String",
+        "required": true,
+        "description": "The AWS::Lambda::Version resource publishes a specified version of an AWS Lambda (Lambda) function."
+      },
+      "Properties": {
+        "type": "Object",
+        "required": true,
+        "properties": {
+          "CodeSha256": {
+            "type": "String",
+            "required": false,
+            "description": "The SHA-256 hash of the deployment package that you want to publish."
+          },
+          "Description": {
+            "type": "String",
+            "required": false,
+            "description": "A description of the version you are publishing. If you don't specify a value, Lambda copies the description from the $LATEST version of the function."
+          },
+          "FunctionName": {
+            "type": "String",
+            "required": true,
+            "resource-ref-type": "AWS::Lambda::Function",
+            "description": "The Lambda function for which you want to publish a version. You can specify the function's name or its Amazon Resource Name (ARN)."
           }
         }
       },
@@ -11389,6 +12059,11 @@
             "allowed-values": [
               "*",
               "t1.micro",
+              "t2.nano",
+              "t2.micro",
+              "t2.small",
+              "t2.medium",
+              "t2.large",
               "m1.small",
               "m1.medium",
               "m1.large",
@@ -11400,6 +12075,11 @@
               "m3.large",
               "m3.xlarge",
               "m3.2xlarge",
+              "m4.large",
+              "m4.xlarge",
+              "m4.2xlarge",
+              "m4.4xlarge",
+              "m4.10xlarge",
               "c1.medium",
               "c1.xlarge",
               "cr1.8xlarge",
@@ -11408,11 +12088,20 @@
               "c3.2xlarge",
               "c3.4xlarge",
               "c3.8xlarge",
+              "c4.large",
+              "c4.xlarge",
+              "c4.2xlarge",
+              "c4.4xlarge",
+              "c4.8xlarge",
               "cc1.4xlarge",
               "cc2.8xlarge",
               "cg1.4xlarge",
+              "d2.xlarge",
+              "d2.2xlarge",
+              "d2.4xlarge",
+              "d2.8xlarge",
               "g2.2xlarge",
-              "g2.2xlarge",
+              "g2.8xlarge",
               "hi1.4xlarge",
               "hs1.8xlarge",
               "i2.xlarge",
@@ -14504,6 +15193,32 @@
                   },
                   "Transition": {
                     "type": "Object",
+                    "required": true,
+                    "description": "Describes when an object transitions to a specified storage class.",
+                    "properties": {
+                      "StorageClass": {
+                        "type": "String",
+                        "required": true,
+                        "description": "The storage class to which you want the object to transition. Currently, you can specify only Glacier.",
+                        "allowed-values": [
+                          "Glacier"
+                        ]
+                      },
+                      "TransitionDate": {
+                        "type": "String",
+                        "required": false,
+                        "description": "Indicates the number of days after creation when objects are transitioned to the specified storage class."
+                      },
+                      "TransitionInDays": {
+                        "type": "Number",
+                        "required": false,
+                        "description": "Indicates when objects are transitioned to the specified storage class. The date value must be in ISO 8601 format. The time is always midnight UTC."
+                      }
+                    }
+                  },
+                  "Transitions": {
+                    "type": "Array",
+                    "array-type": "Object",
                     "required": true,
                     "description": "Describes when an object transitions to a specified storage class.",
                     "properties": {
