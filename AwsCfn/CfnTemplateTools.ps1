@@ -56,6 +56,8 @@ A string format expression that is used to derive a unique Temporary URL S3 Key.
 
         [Parameter(Mandatory=$false)]
         [switch]$DeleteRollback,
+        [Parameter(Mandatory=$false)]
+        [Amazon.CloudFormation.OnFailure]$OnCreateFailure='ROLLBACK',
 
         [Parameter(Mandatory=$false)]
         [switch]$WhatIf,
@@ -211,6 +213,9 @@ A string format expression that is used to derive a unique Temporary URL S3 Key.
         $cfnStackParams = @{
             StackName    = $StackName
         }
+        $cfnCreateStackParams = @{
+            OnFailure = $OnCreateFailure
+        }
         if ($TemplateUrl) {
             $cfnStackParams.TemplateURL = $TemplateUrl
         }
@@ -262,7 +267,7 @@ A string format expression that is used to derive a unique Temporary URL S3 Key.
         else {
             Write-Verbose "Creating NEW stack [$($StackName)]"
             if (-not $WhatIf) {
-                New-CFNStack @cfnStackParams -OnFailure ROLLBACK @awsBaseParams
+                New-CFNStack @cfnCreateStackParams @cfnStackParams @awsBaseParams
             }
         }
     }
@@ -387,6 +392,8 @@ Apply-CfnTemplate
         [switch]$SkipChangeSet,
         [Parameter(ParameterSetName="Apply")]
         [switch]$DeleteRollback,
+        [Parameter(ParameterSetName="Apply")]
+        [Amazon.CloudFormation.OnFailure]$OnCreateFailure,
 
         [string]$ProfileName,
         [string]$Region
@@ -518,10 +525,11 @@ Apply-CfnTemplate
 
                 ## Various "Apply" settings that may be specified
                 $applyParams = @{
-                    TemplateBody   = $tBodyJson
-                    StackName      = $StackName
-                    ChangeSet      = (-not $SkipChangeSet)
-                    DeleteRollback = $DeleteRollback.IsPresent
+                    TemplateBody    = $tBodyJson
+                    StackName       = $StackName
+                    ChangeSet       = (-not $SkipChangeSet)
+                    DeleteRollback  = $DeleteRollback.IsPresent
+                    OnCreateFailure = $OnCreateFailure
                 }
                 if ($stackDefaults.TempUrlBucket) { $applyParams.TempUrlBucket = $stackDefaults.TempUrlBucket }
                 if ($stackDefaults.TempUrlFmtStr) { $applyParams.TempUrlFmtStr = $stackDefaults.TempUrlFmtStr }
