@@ -8,7 +8,7 @@ http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function
 #>
     param(
         [Parameter(Mandatory,Position=0)]
-        [string]$ValueToEncode
+        [object]$ValueToEncode
     )
 
     return @{ "Fn::Base64" = $ValueToEncode }
@@ -92,8 +92,8 @@ http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function
 #>
     [CmdletBinding(DefaultParameterSetName="Values")]
     param(
-        [Parameter(Mandatory,Position=0)]
-        [object]$Delimiter,
+        [Parameter(Position=0)]
+        [object]$Delimiter='',
         [Parameter(Mandatory,Position=1,ParameterSetName="Values")]
         [array]$Values=@(),
         [Parameter(Mandatory,Position=1,ParameterSetName="ValuesRef")]
