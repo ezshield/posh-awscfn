@@ -1,7 +1,7 @@
 ﻿
 <#
 Usage:
-    Generate-CfnResources.ps1 > CfnResources.generated.ps1
+    Generate-CfnResources.ps1 | Out-File CfnResources.generated.ps1 -Encoding utf8
 #>
 
 ## Mapping of schema property types to their

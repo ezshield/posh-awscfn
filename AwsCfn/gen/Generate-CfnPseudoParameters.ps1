@@ -1,7 +1,7 @@
 ﻿
 <#
 Usage:
-    Generate-CfnPseudoParameters.ps1 > CfnPseudoParameters.generated.ps1
+    Generate-CfnPseudoParameters.ps1 | Out-File CfnPseudoParameters.generated.ps1 -Encoding utf8
 #>
 
 $cfnSchema = ConvertFrom-Json ([System.IO.File]::ReadAllText("$PSScriptRoot\CloudFormationV1.schema"))
