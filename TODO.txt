@@ -1,0 +1,3 @@
+* Look into:
+    https://blogs.aws.amazon.com/net/post/Tx1TDKPBYTEGQIV/Argument-Completion-Support-in-AWS-Tools-for-Windows-PowerShell
+  to see if we can use this technique to provide parameter argument "suggested values" without strict enforcement
