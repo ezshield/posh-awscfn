@@ -14,5 +14,5 @@ else {
     $msg = "Cloudormation Schema is still the same"
 }
 
-$slackWebHook = 'https://hooks.slack.com/services/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'
+$slackWebHook = $env:SLACK_WEBHOOK
 Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$msg`" }"
