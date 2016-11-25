@@ -96,17 +96,17 @@ if ($slackWebHook) {
     Write-Host "Sending notifications..."
     $ret = Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$specMesg`" }"
     if (200 -eq $ret.StatusCode) {
-        Write-Host "Success"
+        Write-Host "  * Success"
     }
     else {
-        Write-Host "Failure: ($($ret.StatusCode)) [$($ret.StatusDescription)]"
+        Write-Host "  * Failure: ($($ret.StatusCode)) [$($ret.StatusDescription)]"
     }
 
     $ret = Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$docsMesg`" }"
     if (200 -eq $ret.StatusCode) {
-        Write-Host "Success"
+        Write-Host "  * Success"
     }
     else {
-        Write-Host "Failure: ($($ret.StatusCode)) [$($ret.StatusDescription)]"
+        Write-Host "  * Failure: ($($ret.StatusCode)) [$($ret.StatusDescription)]"
     }
 }
