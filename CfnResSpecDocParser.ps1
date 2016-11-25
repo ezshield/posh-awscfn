@@ -116,8 +116,9 @@ documentation for each Property Type and each of its sub-properties.
     )
 
     $propTypeDocs = [ordered]@{}
+    $index = 0
     foreach ($propTypeName in $PropTypeNames) {
-        Write-Verbose "Processing Property Type [$propTypeName]"
+        Write-Verbose "Processing Property Type (#$(++$index)) [$propTypeName]"
         $propTypeSpec = $ResourcesSpecification.PropertyTypes.$propTypeName
         $docItems = ConvertFrom-PropertyTypeHtmlDocs -DocUrl $propTypeSpec.Documentation
 
@@ -152,8 +153,9 @@ documentation for each Resource Type and each of its sub-properties.
     )
 
     $resTypeDocs = [ordered]@{}
+    $index = 0
     foreach ($resTypeName in $ResTypeNames) {
-        Write-Verbose "Processing Resource Type [$resTypeName]"
+        Write-Verbose "Processing Resource Type (#$(++$index)) [$resTypeName]"
         $resTypeSpec = $ResourcesSpecification.ResourceTypes.$resTypeName
         $docItems = ConvertFrom-ResourceTypeHtmlDocs -DocUrl $resTypeSpec.Documentation
 
@@ -208,6 +210,9 @@ the current summary documentation for each Property Type and Resource Type.
     $propTypeNames = $resSpec.PropertyTypes | Get-Member -MemberType NoteProperty | select -ExpandProperty Name
     $resTypeNames = $resSpec.ResourceTypes | Get-Member -MemberType NoteProperty | select -ExpandProperty Name
     
+    Write-Verbose "Found [$($propTypeNames.Count)] Property Types"
+    Write-Verbose "Found [$($resTypeNames.Count)] Resource Types"
+
     $propTypeDocs = Export-PropertyTypeDocItems -ResourcesSpecification $resSpec -PropTypeNames $propTypeNames
     $resTypeDocs = Export-ResourceTypeDocItems -ResourcesSpecification $resSpec -ResTypeNames $resTypeNames
     
