@@ -118,7 +118,7 @@ documentation for each Property Type and each of its sub-properties.
     $propTypeDocs = [ordered]@{}
     $index = 0
     foreach ($propTypeName in $PropTypeNames) {
-        Write-Verbose "Processing Property Type (#$(++$index)) [$propTypeName]"
+        Write-Verbose "Processing Property Type (#$((++$index))) [$propTypeName]"
         $propTypeSpec = $ResourcesSpecification.PropertyTypes.$propTypeName
         $docItems = ConvertFrom-PropertyTypeHtmlDocs -DocUrl $propTypeSpec.Documentation
 
@@ -155,7 +155,7 @@ documentation for each Resource Type and each of its sub-properties.
     $resTypeDocs = [ordered]@{}
     $index = 0
     foreach ($resTypeName in $ResTypeNames) {
-        Write-Verbose "Processing Resource Type (#$(++$index)) [$resTypeName]"
+        Write-Verbose "Processing Resource Type (#$((++$index))) [$resTypeName]"
         $resTypeSpec = $ResourcesSpecification.ResourceTypes.$resTypeName
         $docItems = ConvertFrom-ResourceTypeHtmlDocs -DocUrl $resTypeSpec.Documentation
 
