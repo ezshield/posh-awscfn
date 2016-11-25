@@ -68,6 +68,8 @@ if ($newSpecHash -ne $oldSpecHash) {
 else {
     $specMesg = "CloudFormation Resource Specification - NO changes found"
     $specDiff = ""
+    del -Force "$GEN_RES_SPEC_FILE"
+    del -Force "$GEN_RES_SPEC_FILE.sha256"
 }
 Write-Host $specMesg
 #Write-Host $specDiff
@@ -83,6 +85,8 @@ if ($newDocsHash -ne $oldDocsHash) {
 else {
     $docsMesg = "CloudFormation Resource Specification DOCS - NO changs found"
     $docsDiff = ""
+    del -Force "$GEN_RES_SPEC_DOCS_FILE"
+    del -Force "$GEN_RES_SPEC_DOCS_FILE.sha256"
 }
 Write-Host $docsMesg
 #Write-Host $docsDiff
