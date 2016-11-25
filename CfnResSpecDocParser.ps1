@@ -3,6 +3,11 @@ $AWS_CFN_RES_SPEC_DOC_URL = "http://docs.aws.amazon.com/AWSCloudFormation/latest
 $DEFAULT_REGION_KEY = "US East (N. Virginia)"
 
 function Resolve-ResourceSpecificationLinks {
+<#
+.SYNOPSIS
+Pulls down the starting page of the Resource Specification documentation from the CFN User's Guide and
+parses out the locations of the different specs (single file and ZIP of multi files) for each AWS Region.
+#>
     param(
         [string]$DocUrl=$AWS_CFN_RES_SPEC_DOC_URL
     )
@@ -28,10 +33,16 @@ function Resolve-ResourceSpecificationLinks {
         }
     }
 
-    $specLinksByRegion
+    return $specLinksByRegion
 }
 
 function ConvertFrom-PropertyTypeHtmlDocs {
+<#
+.SYNOPSIS
+Pulls down the documentation page of a single Property Type from the CFN User's
+Guide and parses out the first paragraph of the main description of the Property
+Type, as well as the first paragraph of the description of any of its sub-properties.
+#>
     param(
         [string]$DocUrl
     )
@@ -56,10 +67,16 @@ function ConvertFrom-PropertyTypeHtmlDocs {
         MainDescription      = $mainDesc
         PropertyDescriptions = $propDescs
     })
-    $ret
+    return $ret
 }
 
 function ConvertFrom-ResourceTypeHtmlDocs {
+<#
+.SYNOPSIS
+Pulls down the documentation page of a single Resource Type from the CFN User's
+Guide and parses out the first paragraph of the main description of the Resource
+Type, as well as the first paragraph of the description of any of its sub-properties.
+#>
     param(
         [string]$DocUrl
     )
@@ -84,17 +101,22 @@ function ConvertFrom-ResourceTypeHtmlDocs {
         MainDescription      = $mainDesc
         PropertyDescriptions = $propDescs
     })
-    $ret
+    return $ret
 }
 
 function Export-PropertyTypeDocItems {
+<#
+Given a Resource Specification description object (e.g. parsed out of JSON),
+extracts all the Property Types and extracts all the summary
+documentation for each Property Type and each of its sub-properties.
+#>
     param(
         [object]$ResourcesSpecification,
         [string[]]$PropTypeNames
     )
 
     $propTypeDocs = [ordered]@{}
-    foreach ($propTypeName in $PropTypeNames[0..1]) {
+    foreach ($propTypeName in $PropTypeNames) {
         Write-Verbose "Processing Property Type [$propTypeName]"
         $propTypeSpec = $ResourcesSpecification.PropertyTypes.$propTypeName
         $docItems = ConvertFrom-PropertyTypeHtmlDocs -DocUrl $propTypeSpec.Documentation
@@ -116,17 +138,21 @@ function Export-PropertyTypeDocItems {
 
         $propTypeDocs[$propTypeName] = $docJson
     }
-    $propTypeDocs
+    return $propTypeDocs
 }
 
 function Export-ResourceTypeDocItems {
-    param(
+<#
+Given a Resource Specification description object (e.g. parsed out of JSON),
+extracts all the Resource Types and extracts all the summary
+documentation for each Resource Type and each of its sub-properties.
+#>    param(
         [object]$ResourcesSpecification,
         [string[]]$ResTypeNames
     )
 
     $resTypeDocs = [ordered]@{}
-    foreach ($resTypeName in $ResTypeNames[0..1]) {
+    foreach ($resTypeName in $ResTypeNames) {
         Write-Verbose "Processing Resource Type [$resTypeName]"
         $resTypeSpec = $ResourcesSpecification.ResourceTypes.$resTypeName
         $docItems = ConvertFrom-ResourceTypeHtmlDocs -DocUrl $resTypeSpec.Documentation
@@ -148,10 +174,15 @@ function Export-ResourceTypeDocItems {
 
         $resTypeDocs.$resTypeName = $docJson
     }
-    $resTypeDocs
+    return $resTypeDocs
 }
 
 function Export-ResourceSpecificationDocItems {
+<#
+.SYNOPSIS
+Resolves the current AWS CloudFormationb Resource Specification and extracts
+the current summary documentation for each Property Type and Resource Type.
+#>
     [CmdletBinding()]
     param(
         [string]$DocUrl=$AWS_CFN_RES_SPEC_DOC_URL,
@@ -161,13 +192,13 @@ function Export-ResourceSpecificationDocItems {
 
     $resSpecFile = "$PSScriptRoot\CfnResSpec.json"
     if ($ForceDocFetch -or -not (Test-Path $resSpecFile)) {
-        Write-Output "Fetching latest Resource Specification for Region [$DocRegion]"
+        Write-Verbose "Fetching latest Resource Specification for Region [$DocRegion]"
         $resSpecLinks = Resolve-ResourceSpecificationLinks -DocUrl $DocUrl
-        Write-Output "  saving to local file [$resSpecFile]"
+        Write-Verbose "  saving to local file [$resSpecFile]"
         Invoke-WebRequest $resSpecLinks[$DocRegion].SingleFileLink -OutFile $resSpecFile
     }
     else {
-        Write-Output "Found and using locally cached Resource Specification [$resSpecFile]"
+        Write-Verbose "Found and using locally cached Resource Specification [$resSpecFile]"
     }
 
     $resSpecRaw = [System.IO.File]::ReadAllText($resSpecFile)
@@ -180,12 +211,13 @@ function Export-ResourceSpecificationDocItems {
     $propTypeDocs = Export-PropertyTypeDocItems -ResourcesSpecification $resSpec -PropTypeNames $propTypeNames
     $resTypeDocs = Export-ResourceTypeDocItems -ResourcesSpecification $resSpec -ResTypeNames $resTypeNames
     
-    Write-Output ([ordered]@{
+    return [ordered]@{
         ResourceSpecificationVersion = $resSpecVersion
         ResourceSpecificationDocumentationUrl = $DocUrl
         PropertyTypes = $propTypeDocs
         ResourceTypes = $resTypeDocs
-    } | ConvertTo-Json -Depth 100)
+    }
 }
 
-Export-ResourceSpecificationDocItems -Verbose
+## For testing:
+#Export-ResourceSpecificationDocItems -Verbose | ConvertTo-Json -Depth 100
