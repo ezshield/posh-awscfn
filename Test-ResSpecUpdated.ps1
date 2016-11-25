@@ -93,6 +93,20 @@ Write-Host $docsMesg
 
 $slackWebHook = $env:SLACK_WEBHOOK
 if ($slackWebHook) {
-    Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$specMesg`" }"
-    Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$docsMesg`" }"
+    Write-Host "Sending notifications..."
+    $ret = Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$specMesg`" }"
+    if (200 -eq $ret.StatusCode) {
+        Write-Host "Success"
+    }
+    else {
+        Write-Host "Failure: ($($ret.StatusCode)) [$($ret.StatusDescription)]"
+    }
+
+    $ret = Invoke-WebRequest -Uri $slackWebHook -Method Post -Body "payload={`"text`": `"$docsMesg`" }"
+    if (200 -eq $ret.StatusCode) {
+        Write-Host "Success"
+    }
+    else {
+        Write-Host "Failure: ($($ret.StatusCode)) [$($ret.StatusDescription)]"
+    }
 }
