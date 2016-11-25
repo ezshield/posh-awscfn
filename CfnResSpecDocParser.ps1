@@ -185,23 +185,23 @@ the current summary documentation for each Property Type and Resource Type.
 #>
     [CmdletBinding()]
     param(
+        [string]$ResSpecFile="$PSScriptRoot\CfnResSpec.json",
         [string]$DocUrl=$AWS_CFN_RES_SPEC_DOC_URL,
         [string]$DocRegion=$DEFAULT_REGION_KEY,
         [switch]$ForceDocFetch
     )
 
-    $resSpecFile = "$PSScriptRoot\CfnResSpec.json"
-    if ($ForceDocFetch -or -not (Test-Path $resSpecFile)) {
+    if ($ForceDocFetch -or -not (Test-Path $ResSpecFile)) {
         Write-Verbose "Fetching latest Resource Specification for Region [$DocRegion]"
         $resSpecLinks = Resolve-ResourceSpecificationLinks -DocUrl $DocUrl
-        Write-Verbose "  saving to local file [$resSpecFile]"
-        Invoke-WebRequest $resSpecLinks[$DocRegion].SingleFileLink -OutFile $resSpecFile
+        Write-Verbose "  saving to local file [$ResSpecFile]"
+        Invoke-WebRequest $resSpecLinks[$DocRegion].SingleFileLink -OutFile $ResSpecFile
     }
     else {
-        Write-Verbose "Found and using locally cached Resource Specification [$resSpecFile]"
+        Write-Verbose "Found and using locally cached Resource Specification [$ResSpecFile]"
     }
 
-    $resSpecRaw = [System.IO.File]::ReadAllText($resSpecFile)
+    $resSpecRaw = [System.IO.File]::ReadAllText($ResSpecFile)
     $resSpec = ConvertFrom-Json $resSpecRaw
     
     $resSpecVersion = $resSpec.ResourceSpecificationVersion
