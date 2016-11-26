@@ -83,7 +83,7 @@ if ($newDocsHash -ne $oldDocsHash) {
     copy -Force "$GEN_RES_SPEC_DOCS_FILE.sha256" "$PUB_RES_SPEC_DOCS_FILE.sha256"
 }
 else {
-    $docsMesg = "CloudFormation Resource Specification DOCS - NO changs found"
+    $docsMesg = "CloudFormation Resource Specification DOCS - NO changes found"
     $docsDiff = ""
     del -Force "$GEN_RES_SPEC_DOCS_FILE"
     del -Force "$GEN_RES_SPEC_DOCS_FILE.sha256"
