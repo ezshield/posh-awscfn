@@ -12,7 +12,7 @@
 RootModule = 'AwsCfn.Tools.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.8.1.0'
+ModuleVersion = '0.9.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'eec3956f-ad25-4cc5-a6ae-76cb9f973268'
