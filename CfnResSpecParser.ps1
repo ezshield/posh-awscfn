@@ -2,9 +2,9 @@
 ## AWS CFN Resource Specification Format:
 ##    http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification-format.html
 
-$resSpecFile = "$PSScriptRoot\CloudFormationResourceSpecification.json"
+$resSpecFile  = "$PSScriptRoot\CloudFormationResourceSpecification.json"
 $genPropTypes = "$PSScriptRoot\gen-proptypes"
-$genResTypes = "$PSScriptRoot\gen-restypes"
+$genResTypes  = "$PSScriptRoot\gen-restypes"
 
 if (-not (Test-Path $genPropTypes -PathType Container)) {
     mkdir $genPropTypes
@@ -50,7 +50,7 @@ Write-Output "  * Found [$($resSpecResTypes.Count)] Resource Types"
 ## Used to compute SHA256 hashes
 $sha = [System.Security.Cryptography.SHA256]::Create()
 
-function Publish-PropertyTypeCmdlets {
+function Export-PropertyTypeCmdlets {
     [CmdletBinding()]
     param(
         [scriptblock]$Filter = { $_.Name -cmatch 'Tag' },
@@ -145,28 +145,4 @@ function New-AwsCfn$cmdletName {
     }
 }
 
-function ConvertFrom-PropertyTypeHtmlDocs {
-    param(
-        [string]$DocUrl
-    )
-    $docResult = Invoke-WebRequest -Uri $DocUrl
-    $docHtml = $docResult.ParsedHtml
-
-    $mainTitle = $docHtml.getElementsByTagName("div") | ? { $_.className -eq 'titlepage' } | select -First 1
-    $mainDesc = $mainTitle.nextSibling.innerText
-
-    $propDefList = $docHtml.getElementsByTagName("dl")[0]
-    $propDescs = [ordered]@{}
-    foreach ($dt in $propDefList.getElementsByTagName("dt")) {
-        $propKey = $dt.innerText
-        $propVal = $dt.nextSibling.getElementsByTagName("p")[0].innerText
-        $propDescs[$propKey] = $propVal
-    }
-
-    $ret = New-Object psobject
-    $ret | Add-Member -MemberType NoteProperty -Name MainDescription -Value $mainDesc
-    $ret | Add-Member -MemberType NoteProperty -Name PropertyDescriptions -Value $propDescs
-    $ret
-}
-
-Publish-PropertyTypeCmdlets -Verbose -ForceGenerate
+#Export-PropertyTypeCmdlets -Verbose -ForceGenerate
