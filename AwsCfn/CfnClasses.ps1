@@ -64,5 +64,55 @@ if (-not ([System.Management.Automation.PSTypeName]'CfnValue').Type)
             return new CfnParam<T>(value == null ? null : value.GetValue());
         }
     }
+
+    public class CfnMapParam<T> : CfnValue
+    {
+        private object _value;
+
+        public CfnMapParam(System.Collections.Generic.IDictionary<string, T> value)
+        {
+            _value = value;
+        }
+
+        private CfnMapParam(object value)
+        {
+            _value = value;
+        }
+
+        public override object GetValue()
+        {
+            return _value;
+        }
+
+        public static implicit operator CfnMapParam<T>(System.Collections.Generic.Dictionary<string, T> value)
+        {
+            return new CfnMapParam<T>(value);
+        }
+
+        public static implicit operator CfnMapParam<T>(System.Collections.Hashtable value)
+        {
+            return Convert(value);
+        }
+
+        public static implicit operator CfnMapParam<T>(System.Collections.Specialized.OrderedDictionary value)
+        {
+            return Convert(value);
+        }
+
+        public static CfnMapParam<T> Convert(System.Collections.IDictionary value)
+        {
+            System.Collections.Generic.Dictionary<string, T> d =
+                    System.Linq.Enumerable.ToDictionary<System.Collections.DictionaryEntry, string, T>(
+                            System.Linq.Enumerable.Cast<System.Collections.DictionaryEntry>(value),
+                            _ => (string)_.Key,
+                            _ => (T)_.Value);
+            return new CfnMapParam<T>(d);
+        }
+
+        public static implicit operator CfnMapParam<T>(CfnDynaValue value)
+        {
+            return new CfnMapParam<T>(value == null ? null : value.GetValue());
+        }
+    }
 "@
 }
