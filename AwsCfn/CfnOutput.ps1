@@ -37,7 +37,12 @@ function Add-CfnOutput {
         [Parameter(Mandatory,Position=1)]
         [object]$Value,
 
+        ## Needs to be an object to support
+        ## rich types like objects and arrays
         [Parameter(Position=2)]
+        [object]$Export,
+		
+        [Parameter(Position=3)]
         [ValidateLength(1,4000)]
         [string]$Description
     )
@@ -53,6 +58,7 @@ function Add-CfnOutput {
 
     $o = [ordered]@{ Value = $Value }
     if ($Description) { $o.Description = $Description }
+    if ($Export) { $o.Export = $Export }	
     $tOutputs.Add($OutputName, $o)
 }
 Set-Alias -Name Output -Value Add-CfnOutput
