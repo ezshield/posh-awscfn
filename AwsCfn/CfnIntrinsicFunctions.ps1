@@ -159,3 +159,41 @@ http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function
     return @{ "Ref" = $LogicalName }
 }
 Set-Alias -Name Fn-Ref -Value Use-CfnRefFunction
+
+function Use-CfnImportFunction {
+<#
+.SYNOPSIS
+The intrinsic function Fn::ImportValue returns the value of an output exported by another stack.
+.DESCRIPTION
+  * When you specify a parameter's logical name, it returns the value of the parameter.
+
+.LINK
+http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-importvalue.html
+#>
+    param(
+        [Parameter(Mandatory,Position=0)]
+        [string]$Value
+    )
+
+    return @{ "Fn::ImportValue" = $Value }
+}
+Set-Alias -Name Fn-Import -Value Use-CfnImportFunction
+
+function Use-CfnSubFunction {
+<#
+.SYNOPSIS
+The intrinsic function Fn::Sub substitutes variables in an input string with values that you specify.
+.DESCRIPTION
+  * When you specify a parameter's logical name, it returns the value of the parameter.
+
+.LINK
+http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-sub.html
+#>
+    param(
+        [Parameter(Mandatory,Position=0)]
+        [string]$Value
+    )
+
+    return @{ "Fn::Sub" = $Value }
+}
+Set-Alias -Name Fn-Sub -Value Use-CfnSubFunction
